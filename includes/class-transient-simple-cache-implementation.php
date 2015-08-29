@@ -1,6 +1,19 @@
 <?php
 
+/**
+ * Class Transient_Simple_Cache_Implementation
+ */
 Class Transient_Simple_Cache_Implementation implements Simple_Cache_Implementation {
+
+	/**
+	 * Return uniquely identifiable name of implementation, eg 'TRANSIENT'
+	 *
+	 * @return string
+	 */
+	public function get_name() {
+		return 'TRANSIENT';
+	}
+
 
 	/**
 	 * Test if caching method is available for use
@@ -11,6 +24,7 @@ Class Transient_Simple_Cache_Implementation implements Simple_Cache_Implementati
 		return true;
 	}
 
+
 	/**
 	 * Test if caching method supports TTL
 	 *
@@ -19,6 +33,7 @@ Class Transient_Simple_Cache_Implementation implements Simple_Cache_Implementati
 	public function supports_ttl() {
 		return true;
 	}
+
 
 	/**
 	 * Fetch the cached object
@@ -35,7 +50,9 @@ Class Transient_Simple_Cache_Implementation implements Simple_Cache_Implementati
 
 		if ( false === $cached_object ) {
 			$object = call_user_func( $callback );
-			$this->set( $cache_key, $object, $ttl );
+			if ( false !== $object ) {
+				$this->set( $cache_key, $object, $ttl );
+			}
 			return $object;
 		}
 

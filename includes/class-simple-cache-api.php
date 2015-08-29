@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Class Simple_Cache_API
+ *
+ * @todo Convert to singleton
+ */
 Class Simple_Cache_API {
 
 	/**
@@ -9,6 +14,14 @@ Class Simple_Cache_API {
 
 
 	public function __construct() {
+		if ( defined( 'CACHE_API_METHOD' ) ) {
+			$implementations = $this->get_implemented_caching_methods();
+			if ( true === array_key_exists( CACHE_API_METHOD, $implementations ) ) {
+				$this->set_caching_method( $implementations[ CACHE_API_METHOD ] );
+				return;
+			}
+		}
+
 		$this->negotiate_caching_method();
 	}
 
@@ -20,6 +33,13 @@ Class Simple_Cache_API {
 	 */
 	public function get_implemented_caching_methods() {
 		$caching_methods = array();
+
+		foreach( get_declared_classes() as $class_name ) {
+			if ( in_array( 'Simple_Cache_Implementation', class_implements( $class_name ) ) ) {
+				$class = new $class_name;
+				$caching_methods[ $class->get_name ] = $class;
+			}
+		}
 
 		return $caching_methods;
 	}
@@ -43,8 +63,8 @@ Class Simple_Cache_API {
 		$caching_methods = $this->get_implemented_caching_methods();
 
 		foreach( $caching_methods as $method ) {
-			if ( true === $method->is_available ) {
-				return $method;
+			if ( true === $method->is_available() ) {
+				$this->set_caching_method( $method );
 			}
 		}
 

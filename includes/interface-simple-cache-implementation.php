@@ -1,6 +1,17 @@
 <?php
 
+/**
+ * Interface Simple_Cache_Implementation
+ */
 Interface Simple_Cache_Implementation {
+
+	/**
+	 * Return uniquely identifiable name of implementation, eg 'TRANSIENT'
+	 *
+	 * @return string
+	 */
+	public function get_name();
+
 
 	/**
 	 * Test if caching method is available for use
