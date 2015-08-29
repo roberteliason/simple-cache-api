@@ -100,6 +100,7 @@ Class Simple_Cache_API {
 	 * @return mixed
 	 */
 	public function get( $cache_key, $callback, $ttl ) {
+
 		if ( false === $this->get_caching_method() && function_exists( $callback ) ) {
 			return call_user_func( $callback );
 		}
