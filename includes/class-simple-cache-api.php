@@ -37,7 +37,7 @@ Class Simple_Cache_API {
 		foreach( get_declared_classes() as $class_name ) {
 			if ( in_array( 'Simple_Cache_Implementation', class_implements( $class_name ) ) ) {
 				$class = new $class_name;
-				$caching_methods[ $class->get_name ] = $class;
+				$caching_methods[ $class->get_name() ] = $class;
 			}
 		}
 
