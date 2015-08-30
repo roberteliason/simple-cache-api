@@ -1,0 +1,23 @@
+{
+  "name": "roberteliason/simple-cache-api",
+  "description": "A simple and extensible cache API",
+  "keywords": ["wordpress"],
+  "homepage": "https://github.com/roberteliason/simple-cache-api",
+  "license": "MIT",
+  "version": "0.1",
+  "authors": [
+    {
+      "name": "Robert Eliason",
+      "email": "robert@pardalis.se",
+      "homepage": "https://github.com/roberteliason"
+    }
+  ],
+  "type": "wordpress-plugin",
+  "require": {
+    "php"                : ">=5.4",
+    "composer/installers": "~1.0"
+  },
+  "extra": {
+    "installer-name": "simple-cache-api"
+  }
+}
