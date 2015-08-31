@@ -100,11 +100,36 @@ Class Simple_Cache_API {
 	 * @return mixed
 	 */
 	public function get( $cache_key, $callback, $ttl ) {
+		$caching_method = $this->get_caching_method();
 
-		if ( false === $this->get_caching_method() && function_exists( $callback ) ) {
-			return call_user_func( $callback );
+		if ( false === $caching_method || ( false !== $caching_method && ! $caching_method->is_available() ) ) {
+			if ( function_exists( $callback ) ) {
+				return call_user_func( $callback );
+			}
+
+		} else {
+			$result = $this->get_caching_method()->get( $cache_key, $callback, $ttl );
+			if ( false === $result && function_exists( $callback ) ) {
+				return call_user_func( $callback );
+			} else {
+				return $result;
+			}
+
 		}
 
-		return $this->get_caching_method()->get( $cache_key, $callback, $ttl );
+		return false;
 	}
+
+
+	/**
+	 * Flush the cache for an object.
+	 *
+	 * @param $cache_key
+	 *
+	 * @return mixed
+	 */
+	public function flush( $cache_key ) {
+		return $this->get_caching_method()->flush( $cache_key );
+	}
+
 }
