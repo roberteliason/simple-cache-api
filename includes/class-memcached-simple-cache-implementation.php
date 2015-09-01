@@ -24,7 +24,7 @@ final class Memcached_Simple_Cache_Implementation implements Simple_Cache_Implem
 	/**
 	 * Allow overriding of the default host and ports.
 	 */
-	private function __constructor() {
+	public function __constructor() {
 		if ( defined( 'SCAPI_MEMCACHED_HOST' ) ) {
 			$this->host = SCAPI_MEMCACHED_HOST;
 		}
@@ -112,7 +112,7 @@ final class Memcached_Simple_Cache_Implementation implements Simple_Cache_Implem
 			if ( function_exists( $callback ) ) {
 				$object = call_user_func( $callback );
 				if ( false !== $object ) {
-					$result = $this->set( $cache_key, $object, $ttl );
+					$result = $this->set( $cache_key, $object, $ttl );  // what happens to $result?
 				}
 			}
 		}
