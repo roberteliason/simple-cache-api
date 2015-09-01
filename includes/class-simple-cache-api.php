@@ -14,10 +14,10 @@ Class Simple_Cache_API {
 
 
 	public function __construct() {
-		if ( defined( 'CACHE_API_METHOD' ) ) {
+		if ( defined( 'SCAPI_CACHE_METHOD' ) ) {
 			$implementations = $this->get_implemented_caching_methods();
-			if ( true === array_key_exists( CACHE_API_METHOD, $implementations ) ) {
-				$this->set_caching_method( $implementations[ CACHE_API_METHOD ] );
+			if ( true === array_key_exists( SCAPI_CACHE_METHOD, $implementations ) ) {
+				$this->set_caching_method( $implementations[ SCAPI_CACHE_METHOD ] );
 				return;
 			}
 		}
